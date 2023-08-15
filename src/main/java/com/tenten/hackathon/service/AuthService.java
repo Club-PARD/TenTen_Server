@@ -9,7 +9,6 @@ import com.tenten.hackathon.repository.UserRepository;
 import com.tenten.hackathon.security.TokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.Optional;
 
 @Service

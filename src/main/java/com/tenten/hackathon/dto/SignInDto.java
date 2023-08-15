@@ -1,4 +1,5 @@
 package com.tenten.hackathon.dto;
+
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -13,7 +14,4 @@ public class SignInDto {
     private String userEmail;
     @NotBlank
     private String userPassword;
-
-    @ColumnDefault("0.0")
-    private double userTotalWeight;
 }

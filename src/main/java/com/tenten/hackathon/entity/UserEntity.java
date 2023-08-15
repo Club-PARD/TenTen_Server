@@ -30,5 +30,6 @@ public class UserEntity {
     public UserEntity(SignUpDto dto){
         this.userEmail = dto.getUserEmail();
         this.userPassword = dto.getUserPassword();
+        this.userTotalWeight = dto.getUserTotalWeight();
     }
 }
