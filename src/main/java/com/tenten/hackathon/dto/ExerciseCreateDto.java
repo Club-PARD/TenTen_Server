@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import java.lang.String;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
 
 import java.sql.Date;
 
@@ -12,12 +13,10 @@ import java.sql.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ExerciseCreateDto {
-//    private int exerciseId;
-    @NotBlank
+
     private int exerciseType;
-    @NotBlank
+
     private String userEmail;
-//    private Date calendarDate;
 
     private int sets;
 

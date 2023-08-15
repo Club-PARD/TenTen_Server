@@ -5,10 +5,12 @@ import com.tenten.hackathon.dto.ResponseDto;
 import com.tenten.hackathon.entity.ExerciseEntity;
 import com.tenten.hackathon.service.ExerciseService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.lang.String;
 import java.util.List;
@@ -18,15 +20,17 @@ import java.util.List;
 @RequestMapping("/api/exercise")
 public class ExerciseController {
 
-    @Autowired ExerciseService exerciseService;
+    @Autowired
+    ExerciseService exerciseService;
 
     @GetMapping("/list")
-    public ResponseEntity<ResponseDto<List<ExerciseEntity>>> getList(
-            @RequestParam String userEmail,
-            @RequestParam Date calendarDate) {
-        ResponseDto<List<ExerciseEntity>> response = exerciseService.getList(userEmail, calendarDate);
-        return new ResponseEntity<>(response, HttpStatus.OK);
+    public ResponseDto<List<ExerciseEntity>> getList(
+            @RequestParam("userEmail") String userEmail,
+            @RequestParam("calendarDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate calendarDate) {
+
+        return exerciseService.getList(userEmail, calendarDate);
     }
+
 
     @PostMapping("/create")
     public ResponseDto<?> createExercise(@RequestBody ExerciseCreateDto requestBody) {
@@ -35,16 +39,13 @@ public class ExerciseController {
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<ResponseDto<?>> updateExercise(
-            @PathVariable Integer id,
-            @RequestBody ExerciseCreateDto dto) {
-        ResponseDto<?> response = exerciseService.updateExercise(id, dto);
-        return new ResponseEntity<>(response, HttpStatus.OK);
+    public ResponseDto<?> updateExercise(@PathVariable("id") Integer id, @RequestBody ExerciseCreateDto requestBody) {
+        return exerciseService.updateExercise(id, requestBody);
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<ResponseDto<?>> deleteExercise(@PathVariable Integer id) {
-        ResponseDto<?> response = exerciseService.deleteExercise(id);
-        return new ResponseEntity<>(response, HttpStatus.OK);
+    public ResponseDto<?> deleteExercise(@PathVariable("id") Integer id) {
+        return exerciseService.deleteExercise(id);
     }
+
 }

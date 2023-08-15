@@ -8,11 +8,13 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
-import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.lang.String;
-import java.util.Date;
+import java.time.LocalDate;
 
-
+@EntityListeners(AuditingEntityListener.class) //
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -28,8 +30,9 @@ public class ExerciseEntity {
     int exerciseType;
 
     String userEmail;
-    @CreatedDate
-    Date calendarDate;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    LocalDate calendarDate = LocalDate.now();
     @ColumnDefault("1")
     int sets;
     @ColumnDefault("0")

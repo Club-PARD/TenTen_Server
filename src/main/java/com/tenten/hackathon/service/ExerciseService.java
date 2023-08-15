@@ -8,8 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.lang.String;
 
@@ -20,7 +20,7 @@ public class ExerciseService {
     @Autowired
     ExerciseRepository exerciseRepository;
 
-    public ResponseDto<List<ExerciseEntity>> getList(String userEmail, Date calendarDate) {
+    public ResponseDto<List<ExerciseEntity>> getList(String userEmail, LocalDate calendarDate) {
         List<ExerciseEntity> exerciseList = new ArrayList<ExerciseEntity>();
 
         try {
@@ -44,17 +44,38 @@ public class ExerciseService {
         return ResponseDto.setSuccess("Exercise Create Success", null);
     }
 
-    public ResponseDto<?> updateExercise(int id, ExerciseCreateDto dto) {
-        ExerciseEntity exerciseEntity = exerciseRepository.findById(id).get();
+//    public ResponseDto<?> updateExercise(Integer id, ExerciseCreateDto dto) {
+//        ExerciseEntity exerciseEntity = exerciseRepository.findById(id).get();
+//        try {
+//            if (dto.getSets() != -1) exerciseEntity.setSets(dto.getSets());
+//            if (dto.getReps() != -1) exerciseEntity.setReps(dto.getReps());
+//            if (dto.getWeight() != -1) exerciseEntity.setWeight(dto.getWeight());
+//
+//            return ResponseDto.setSuccess("Exercise update Success", null);
+//        } catch (Exception e) {
+//            return ResponseDto.setFailed("DB Error");
+//        }
+//    }
+
+    public ResponseDto<?> updateExercise(Integer id, ExerciseCreateDto dto) {
         try {
-            exerciseEntity.setReps(dto.getReps());
-            exerciseEntity.setWeight(dto.getWeight());
+            ExerciseEntity exerciseEntity = exerciseRepository.findById(id).get();
+
+            if (exerciseEntity == null) {
+                return ResponseDto.setFailed("Exercise not found");
+            } else {
+                exerciseEntity.setSets(dto.getSets());
+                exerciseEntity.setReps(dto.getReps());
+                exerciseEntity.setWeight(dto.getWeight());
+                exerciseRepository.save(exerciseEntity); // Save the updated entity
+            }
 
             return ResponseDto.setSuccess("Exercise update Success", null);
         } catch (Exception e) {
             return ResponseDto.setFailed("DB Error");
         }
     }
+
 
     public ResponseDto<?> deleteExercise(Integer id) {
         try {
