@@ -64,7 +64,7 @@ public class ExerciseService {
             if (exerciseEntity == null) {
                 return ResponseDto.setFailed("Exercise not found");
             } else {
-                exerciseEntity.setSets(dto.getSets());
+//                exerciseEntity.setSets(dto.getSets());
                 exerciseEntity.setReps(dto.getReps());
                 exerciseEntity.setWeight(dto.getWeight());
                 exerciseRepository.save(exerciseEntity); // Save the updated entity
